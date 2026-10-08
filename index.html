@@ -44,7 +44,7 @@ section[id]{scroll-margin-top:100px}
 @keyframes heroBreathe{to{transform:scale(1.12) translateX(-1%)}}
 @keyframes landscapeDrift{from{transform:scale(1) translateX(-1%)}to{transform:scale(1.05) translateX(1%)}}
 .menu{min-width:48px;min-height:48px}
-.motion-toggle{position:fixed;bottom:18px;right:18px;z-index:12;background:#082f2a;color:white;border:1px solid #fff7;border-radius:24px;padding:12px 16px;min-height:44px;cursor:pointer}
+
 .motion-paused *,.motion-paused:before,.motion-paused:after,.motion-paused *:before,.motion-paused *:after{animation-play-state:paused!important}
 .gallery{grid-template-columns:1.2fr 1fr;grid-template-rows:240px 240px}
 .gallery img:first-child{grid-row:auto}
@@ -78,4 +78,4 @@ const tours=[["The Classic Loop","3 days / 2 nights","$165–209 per person","A 
 document.querySelector('#grid').innerHTML=tours.map(t=>'<article class="card reveal"><img src="'+t[4]+'"><div class="cardbody"><span class="tag">'+t[1]+'</span><h3>'+t[0]+'</h3><p>'+t[3]+'</p><div class="price"><b>'+t[2]+'</b><span>↗</span></div></div></article>').join('');
 </script>
 <button class="motion-toggle" type="button" aria-pressed="false">Pause motion</button>
-<script src="app.js?v=5" defer></script><div class="contact-float" aria-label="Quick contact"><a class="float-btn instagram" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><span>◎</span><b>Instagram</b></a><a class="float-btn whatsapp" href="https://wa.me/84948242421" target="_blank" rel="noopener" aria-label="WhatsApp"><span>◔</span><b>WhatsApp</b></a><a class="float-btn messenger" href="https://m.me/" target="_blank" rel="noopener" aria-label="Messenger"><span>✦</span><b>Messenger</b></a></div></body></html>
+<script src="app.js?v=5" defer></script><div class="contact-float" aria-label="Quick contact"><a class="float-btn instagram" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></span><b>Instagram</b></a><a class="float-btn whatsapp" href="https://wa.me/84948242421" target="_blank" rel="noopener" aria-label="WhatsApp"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.7a8 8 0 0 1-12.1 6.9L4 20l1.4-3.6A8 8 0 1 1 20 11.7Z"></path><path d="M8.2 8.6c.3-.5.6-.5 1-.4l1 .8c.3.2.3.5.1.8l-.5.6c.5 1 1.2 1.7 2.2 2.2l.6-.5c.3-.2.6-.2.8.1l.8 1c.2.3.1.7-.4 1-1 .6-2.4 0-3.7-1.1-1.2-1-2.2-2.1-2.6-3.2-.3-.7-.3-1 .7-1.3Z"></path></svg></span><b>WhatsApp</b></a><a class="float-btn messenger" href="https://m.me/" target="_blank" rel="noopener" aria-label="Messenger"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 3-8.2 18-2.1-7.7L3 11.2 21 3Z"></path><path d="m10.7 13.3 4.2-4.2"></path></svg></span><b>Messenger</b></a></div></body></html>
