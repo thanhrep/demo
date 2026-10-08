@@ -10,6 +10,14 @@ menu.addEventListener('click', () => {
   menu.setAttribute('aria-expanded', String(open));
 });
 links.addEventListener('click', closeMenu);
+document.querySelectorAll('.choose-package').forEach(button => {
+  button.addEventListener('click', () => {
+    const select = document.querySelector('#package');
+    select.value = [...select.options].find(option => option.textContent.startsWith(button.dataset.package))?.value || '';
+    document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.querySelector('#start').focus(), 600);
+  });
+});
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeMenu(); menu.focus(); } });
 document.addEventListener('click', e => { if (!nav.contains(e.target)) closeMenu(); });
 const updateNav = () => nav.classList.toggle('scrolled', scrollY > 40);
@@ -44,7 +52,7 @@ setInterval(() => {
 document.querySelector('#form').addEventListener('submit', e => {
   e.preventDefault();
   const data = new FormData(e.currentTarget);
-  const body = 'Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\n\n' + data.get('message');
+  const body = 'Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\nPackage: ' + data.get('package') + '\nStart date: ' + data.get('start') + '\nEnd date: ' + data.get('end') + '\nTravellers: ' + data.get('guests') + '\n\n' + data.get('message');
   const link = document.createElement('a');
   link.href = 'mailto:hagiangmotorbiketour@gmail.com?subject=Ha%20Giang%20trip%20enquiry&body=' + encodeURIComponent(body);
   link.textContent = 'Open email draft';
