@@ -1,25 +1,25 @@
 /* Explicit site motion requested by the owner; the pause button always works. */
 body::before {
-  inset:-14%;
+  inset:-5%;
   background:linear-gradient(135deg,#dff3f000,#f8f2e700),url("assets/page-background.jpg") center/cover;
-  animation:livingLandscape 9s ease-in-out infinite alternate!important;
+  animation:landscapePan 38s ease-in-out infinite alternate!important;
   will-change:transform;
 }
-@keyframes livingLandscape {
-  from { transform:translate3d(-2%,1%,0) scale(1.02); }
-  to { transform:translate3d(2%,-1.5%,0) scale(1.12); }
+@keyframes landscapePan {
+  from { background-position:47% 50%; }
+  to { background-position:53% 48%; }
 }
 .atmosphere::before {
   width:100vw;height:26vh;left:-35%;top:24%;
   background:radial-gradient(ellipse,#fff9 0%,#fff5 30%,transparent 70%);
   filter:blur(14px);opacity:.42;
-  animation:livingCloud 11s linear infinite alternate!important;
+  animation:livingCloud 24s linear infinite alternate!important;
 }
 .atmosphere::after {
   display:block;width:90vw;height:22vh;right:-25%;top:60%;
   background:radial-gradient(ellipse,#fff8,transparent 70%);
   filter:blur(18px);opacity:.28;
-  animation:livingCloud 15s ease-in-out infinite alternate-reverse!important;
+  animation:livingCloud 31s ease-in-out infinite alternate-reverse!important;
 }
 @keyframes livingCloud {
   from {transform:translate3d(-12vw,0,0);}
@@ -27,8 +27,12 @@ body::before {
 }
 .sun-glow{animation:sunPulse 9s ease-in-out infinite alternate!important}
 .mist-band{animation:mistFlow 12s ease-in-out infinite alternate!important;opacity:.3}
+.sun-rays{position:absolute;width:52vw;height:52vw;right:-10vw;top:-6vw;border-radius:50%;background:repeating-conic-gradient(from 205deg,#ffeaa000 0deg,#ffeaa022 7deg,#ffeaa000 15deg);filter:blur(5px);opacity:.34;animation:raySweep 28s linear infinite;transform-origin:60% 60%}
+.light-dust{position:absolute;inset:0;opacity:.35;background-image:radial-gradient(circle,#ffe6a5 0 1px,transparent 2px);background-size:170px 130px;animation:dustDrift 22s linear infinite}
+@keyframes raySweep{from{transform:rotate(-8deg)}to{transform:rotate(18deg)}}@keyframes dustDrift{from{background-position:0 0;transform:translateX(-2%)}to{background-position:170px 130px;transform:translateX(2%)}}
 .motion-paused::before,.motion-paused .atmosphere::before,
 .motion-paused .atmosphere::after,.motion-paused .sun-glow,
+.motion-paused .sun-rays,.motion-paused .light-dust,
 .motion-paused .mist-band{animation-play-state:paused!important}
 @media(max-width:800px){
   body::before{animation-duration:19s!important}
