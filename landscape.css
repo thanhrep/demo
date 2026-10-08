@@ -56,3 +56,6 @@ body::before {
 
 /* A visible slow light sweep across the landscape. */
 .atmosphere::after{box-shadow:0 0 90px 35px #fff5}
+.scene-bg{position:fixed;inset:0;z-index:-3;background:center/cover no-repeat;opacity:.6;filter:saturate(1.12) contrast(1.04);animation:backgroundPan 14s ease-in-out infinite alternate;transition:background-image 1.8s ease-in-out}
+@keyframes backgroundPan{from{background-position:47% 50%;transform:scale(1.03)}to{background-position:53% 48%;transform:scale(1.1)}}
+@media(max-width:800px){.scene-bg{opacity:.5;animation-duration:20s}}
