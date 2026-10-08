@@ -54,7 +54,7 @@ document.querySelector('#form').addEventListener('submit', e => {
   const data = new FormData(e.currentTarget);
   const body = 'Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\nPackage: ' + data.get('package') + '\nStart date: ' + data.get('start') + '\nEnd date: ' + data.get('end') + '\nTravellers: ' + data.get('guests') + '\n\n' + data.get('message');
   const link = document.createElement('a');
-  link.href = 'mailto:hagiangmotorbiketour@gmail.com?subject=Ha%20Giang%20trip%20enquiry&body=' + encodeURIComponent(body);
+  link.href = 'mailto:sky@traverl.com?subject=Ha%20Giang%20trip%20enquiry&body=' + encodeURIComponent(body);
   link.textContent = 'Open email draft';
   const status = document.querySelector('#status');
   status.replaceChildren('Your draft is ready. Send it from your email app: ', link);
