@@ -16,15 +16,6 @@ const updateNav = () => nav.classList.toggle('scrolled', scrollY > 40);
 addEventListener('scroll', updateNav, { passive: true });
 updateNav();
 const slides = [...document.querySelectorAll('.slides img')];
-const landscape = [
-  'https://cdnphoto.dantri.com.vn/SPHeG0xgZIfVFbx2pip8LjD3yyY%3D/thumb_w/990/2021/07/01/207644897175849684504427969722800068904751n-1625130463593.jpg',
-  'https://media.vanverre.nl/landscape2/product2/Vietnam%20-%20Ha%20Giang%20-%2010.jpg',
-  'https://vietnamtrustcarrentals.com/vnt_upload/news/01_2025/Ma-Pi-Leng-Pass.jpg',
-  'https://media.mia.vn/uploads/blog-du-lich/hanh-trinh-lang-thang-ha-giang-bang-xe-may-day-thu-vi-15-1668444071.jpg'
-];
-document.querySelectorAll('.card img').forEach((img, i) => { img.src = landscape[i]; });
-const gallery = [...document.querySelectorAll('.gallery img')];
-gallery.forEach((img, i) => { img.src = landscape[i]; });
 document.querySelectorAll('main img').forEach(img => { img.loading = 'lazy'; img.decoding = 'async'; });
 document.querySelectorAll('img').forEach(img => {
   if (!img.alt) img.alt = img.closest('.brand') ? 'Sky Ha Giang Loop' : 'Mountain landscape';
