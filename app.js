@@ -36,14 +36,13 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let current = 0;
 slides[0].classList.add('active');
 const motion = document.querySelector('.motion-toggle');
-let paused = reduced.matches;
+let paused = false;
 function setMotion() {
   document.body.classList.toggle('motion-paused', paused);
   motion.setAttribute('aria-pressed', String(paused));
   motion.textContent = paused ? 'Resume motion' : 'Pause motion';
 }
 motion.addEventListener('click', () => { paused = !paused; setMotion(); });
-reduced.addEventListener('change', () => { paused = reduced.matches; setMotion(); });
 setMotion();
 setInterval(() => {
   if (paused || document.hidden) return;
