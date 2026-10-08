@@ -1,8 +1,8 @@
 /* Explicit site motion requested by the owner; the pause button always works. */
 body::before {
-  inset:-8%;
-  background:linear-gradient(135deg,#dff3f018,#f8f2e710),url("assets/page-background.jpg") center/cover;
-  animation:livingLandscape 14s ease-in-out infinite alternate!important;
+  inset:-14%;
+  background:linear-gradient(135deg,#dff3f000,#f8f2e700),url("assets/page-background.jpg") center/cover;
+  animation:livingLandscape 9s ease-in-out infinite alternate!important;
   will-change:transform;
 }
 @keyframes livingLandscape {
@@ -13,13 +13,13 @@ body::before {
   width:100vw;height:26vh;left:-35%;top:24%;
   background:radial-gradient(ellipse,#fff9 0%,#fff5 30%,transparent 70%);
   filter:blur(14px);opacity:.42;
-  animation:livingCloud 19s linear infinite alternate!important;
+  animation:livingCloud 11s linear infinite alternate!important;
 }
 .atmosphere::after {
   display:block;width:90vw;height:22vh;right:-25%;top:60%;
   background:radial-gradient(ellipse,#fff8,transparent 70%);
   filter:blur(18px);opacity:.28;
-  animation:livingCloud 26s ease-in-out infinite alternate-reverse!important;
+  animation:livingCloud 15s ease-in-out infinite alternate-reverse!important;
 }
 @keyframes livingCloud {
   from {transform:translate3d(-12vw,0,0);}
@@ -35,3 +35,6 @@ body::before {
   .atmosphere::after{display:none}
   .atmosphere::before{filter:blur(10px)}
 }
+
+/* A visible slow light sweep across the landscape. */
+.atmosphere::after{box-shadow:0 0 90px 35px #fff5}
