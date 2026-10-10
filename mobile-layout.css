@@ -100,8 +100,22 @@ svg {
   .head {
     display: block;
     margin-bottom: 22px;
-    padding: 0;
-    background: transparent;
+    padding: 18px;
+    border: 1px solid #ffffffd9;
+    border-radius: 20px;
+    background: #faf8f1ed;
+    box-shadow: 0 12px 30px #18382d18;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  .head .kicker {
+    color: #477a67;
+  }
+
+  .head h2,
+  .head .intro {
+    color: #344b42;
   }
 
   .head h2,
@@ -246,7 +260,7 @@ svg {
   }
 
   .booking .head {
-    padding: 0;
+    padding: 18px;
   }
 
   .steps {
