@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Add cache-busted tour interactions and Nho Que background
+      - name: Add cache-busted tour interactions, responsive layout, and panorama background
         env:
           PAGE_SHA: ${{ github.sha }}
         run: |
@@ -32,14 +32,16 @@ jobs:
           sha = os.environ["PAGE_SHA"]
           head = (
               f'<link rel="stylesheet" href="tour-carousel.css?v={sha}">'
+              f'<link rel="stylesheet" href="mobile-layout.css?v={sha}">'
               f'<link rel="stylesheet" href="nho-que-background.css?v={sha}">'
               "</head>"
           )
           scripts = (
               f'<script src="tour-interactions.js?v={sha}"></script>'
-              f'<script src="nature-background.js?v={sha}"></script>'
-              "<script>const bg = new NatureBackground({logoText: 'SKYHAGIANGLOOT', "
-              "showLogo: true, scrollSensitivity: 1.0});</script></body>"
+              f'<script src="nature-background-v7.js?v={sha}"></script>'
+              "<script>const bg = new NatureBackground({logoText: 'SKY TRAVEL', "
+              "showLogo: false, scrollSensitivity: 1.0, "
+              "maxPixelRatio: window.innerWidth < 800 ? 1 : 1.35, zIndex: 1});</script></body>"
           )
           page.write_text(
               source.replace("</head>", head).replace("</body>", scripts),

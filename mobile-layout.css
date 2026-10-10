@@ -1,0 +1,446 @@
+/* Mobile layout: preserve readable card widths instead of squeezing desktop columns. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+@media (max-width: 800px) {
+  body > nav,
+  body > header,
+  body > main,
+  body > footer {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .wrap {
+    width: calc(100% - 32px);
+    max-width: none;
+  }
+
+  .nav {
+    top: 8px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    padding: 8px 12px;
+    border-radius: 18px !important;
+  }
+
+  .nav .wrap {
+    width: 100%;
+  }
+
+  .brand {
+    min-width: 0;
+    max-width: calc(100% - 58px);
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+  }
+
+  .hero {
+    width: 100%;
+    min-height: min(720px, 100svh);
+    height: auto;
+    max-height: none;
+    padding: 138px 0 88px;
+    border-radius: 0 0 22px 22px;
+  }
+
+  .heroContent {
+    width: calc(100% - 36px);
+    max-width: 560px;
+    margin-inline: auto;
+    padding: 0;
+  }
+
+  .hero h1 {
+    max-width: 12ch;
+    font-size: clamp(2.55rem, 11.5vw, 4.5rem);
+    line-height: 0.99;
+    letter-spacing: -0.045em;
+  }
+
+  .hero p {
+    max-width: 35ch;
+    font-size: 1rem;
+    line-height: 1.58;
+  }
+
+  .hero .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .hero .actions .pill {
+    min-height: 48px;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 0.86rem;
+  }
+
+  .section {
+    padding-block: 58px;
+  }
+
+  .section.wrap {
+    padding-inline: 16px;
+  }
+
+  .head {
+    display: block;
+    margin-bottom: 22px;
+    padding: 0;
+    background: transparent;
+  }
+
+  .head h2,
+  .booking .head h2,
+  .discover .head h2 {
+    font-size: clamp(2rem, 8.7vw, 3.2rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  .intro {
+    max-width: 42ch;
+    margin-top: 14px;
+    font-size: 0.96rem;
+    line-height: 1.58;
+  }
+
+  /* Journey cards become a swipeable rail, not three unreadable columns. */
+  .tours .grid {
+    display: flex;
+    gap: 14px;
+    margin-inline: -2px;
+    padding: 8px 2px 18px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .tours .grid::-webkit-scrollbar,
+  .package-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tours .card {
+    flex: 0 0 min(84vw, 360px);
+    min-width: 0;
+    scroll-snap-align: center;
+    text-align: left;
+    border-radius: 20px;
+  }
+
+  .tours .card img {
+    height: clamp(160px, 52vw, 210px);
+  }
+
+  .tours .cardbody {
+    padding: 18px;
+  }
+
+  .tours .card h3 {
+    min-height: 0;
+    margin: 13px 0 8px;
+    font-size: clamp(1.25rem, 5.8vw, 1.65rem);
+    line-height: 1.08;
+  }
+
+  .tours .card p {
+    min-height: 0;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .tours .price {
+    font-size: 0.86rem;
+  }
+
+  .storyin {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .storyin > div:first-child,
+  .storyin .stats {
+    min-width: 0;
+    min-height: 0;
+    padding: 22px 18px;
+    border-radius: 20px;
+  }
+
+  .story h2 {
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.04;
+  }
+
+  .story p {
+    font-size: 0.94rem;
+    line-height: 1.55;
+  }
+
+  .story .pill {
+    min-height: 44px;
+    font-size: 0.8rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 0;
+  }
+
+  .stat {
+    min-width: 0;
+    padding: 14px 12px;
+  }
+
+  .stat strong {
+    font-size: 1.8rem;
+  }
+
+  .stat span {
+    font-size: 0.76rem;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min(60vw, 230px) repeat(2, min(40vw, 160px));
+    gap: 9px;
+  }
+
+  .gallery img:first-child {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+
+  .discover-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min(58vw, 220px) repeat(2, min(40vw, 155px));
+    gap: 9px;
+  }
+
+  .discover-grid article:first-child {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+
+  .discover-grid h3 {
+    font-size: 0.88rem;
+    line-height: 1.2;
+  }
+
+  .booking .head {
+    padding: 0;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .steps article {
+    padding: 18px;
+  }
+
+  .steps h3 {
+    margin: 12px 0 6px;
+    font-size: 1.05rem;
+  }
+
+  .steps p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* One generous tour card in view; next card peeks in to invite a swipe. */
+  .packages.wrap {
+    width: 100%;
+    padding-inline: 16px;
+  }
+
+  .package-carousel {
+    width: calc(100% + 32px);
+    margin-inline: -16px;
+    padding-block: 8px 18px;
+  }
+
+  .package-grid {
+    gap: 12px;
+    padding: 14px calc((100vw - min(84vw, 380px)) / 2) 24px;
+    scroll-padding-inline: calc((100vw - min(84vw, 380px)) / 2);
+  }
+
+  .package-card,
+  .package-edge-space,
+  .package-edge-space:last-child {
+    flex-basis: min(84vw, 380px) !important;
+  }
+
+  .package-edge-space,
+  .package-edge-space:last-child {
+    flex: 0 0 0 !important;
+    width: 0;
+  }
+
+  .package-card {
+    min-height: 340px;
+    border-radius: 22px;
+  }
+
+  .tour-card-image {
+    height: clamp(170px, 54vw, 220px);
+  }
+
+  .tour-card-body {
+    gap: 10px;
+    padding: 17px 18px 18px;
+  }
+
+  .tour-card-body .tag {
+    padding: 6px 9px;
+    font-size: 0.68rem;
+  }
+
+  .tour-card-body h3 {
+    font-size: clamp(1.12rem, 5.2vw, 1.45rem);
+    line-height: 1.12;
+  }
+
+  .tour-card-body p {
+    min-height: 4.2em;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
+  }
+
+  .tour-card-body > strong {
+    font-size: 0.98rem;
+  }
+
+  .tour-card-body small {
+    font-size: 0.72rem;
+  }
+
+  .tour-detail-trigger {
+    min-height: 46px;
+    padding: 10px 13px;
+    font-size: 0.82rem;
+  }
+
+  .tour-arrows {
+    inset: -54px 16px auto auto;
+    gap: 8px;
+    transform: none;
+  }
+
+  .tour-arrow {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+  }
+
+  .contactbox {
+    padding: 25px 20px;
+    border-radius: 22px !important;
+  }
+
+  .contactbox h2 {
+    font-size: clamp(2rem, 9vw, 3.1rem);
+  }
+
+  .contactbox p,
+  .form label {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .form input,
+  .form textarea,
+  .form select,
+  .form .pill {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .date-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .site-footer {
+    padding: 30px 16px 18px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 14px;
+  }
+
+  .footer-brand,
+  .footer-social {
+    grid-column: 1 / -1;
+  }
+
+  .contact-float {
+    right: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .wrap {
+    width: calc(100% - 28px);
+  }
+
+  .section.wrap {
+    padding-inline: 14px;
+  }
+
+  .heroContent {
+    width: calc(100% - 32px);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 11.5vw, 3.25rem);
+  }
+
+  .tours .card {
+    flex-basis: 86vw;
+  }
+
+  .package-grid {
+    padding-inline: 7vw;
+    scroll-padding-inline: 7vw;
+  }
+
+  .package-card,
+  .package-edge-space,
+  .package-edge-space:last-child {
+    flex-basis: 86vw !important;
+  }
+
+  .tour-detail-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .date-row {
+    grid-template-columns: 1fr;
+  }
+}
