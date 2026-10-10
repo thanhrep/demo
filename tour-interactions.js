@@ -46,19 +46,22 @@
     document.addEventListener('keydown', event => { if (event.key === 'Escape') close(grid.querySelector('.is-expanded')); });
     let carouselIndex = 0;
     const moveGrid = direction => {
-      carouselIndex = Math.max(0, Math.min(cards.length - 1, carouselIndex + direction));
+      const gridRect = grid.getBoundingClientRect();
+      const visibleIndex = cards.findIndex(card => {
+        const rect = card.getBoundingClientRect();
+        return rect.right > gridRect.left + 2 && rect.left < gridRect.right - 2;
+      });
+      carouselIndex = Math.max(0, Math.min(cards.length - 1, Math.max(0, visibleIndex) + direction));
+      const cardRect = cards[carouselIndex].getBoundingClientRect();
+      const desired = grid.scrollLeft + cardRect.left - gridRect.left - 12;
+      const target = Math.max(0, Math.min(desired, grid.scrollWidth - grid.clientWidth));
       cards.forEach(item => item.classList.remove('is-active'));
       cards[carouselIndex].classList.add('is-active');
-      cards[carouselIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      setTimeout(() => cards[carouselIndex]?.classList.remove('is-active'), 650);
+      grid.scrollTo({ left: target, behavior: 'smooth' });
+      setTimeout(() => cards[carouselIndex]?.classList.remove('is-active'), 700);
     };
-    controls.addEventListener('click', event => {
-      const button = event.target.closest('.tour-arrow');
-      if (!button) return;
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      moveGrid(button === controls.querySelector('.tour-arrow:last-child') ? 1 : -1);
-    }, true);
+    controls.querySelector('.tour-arrow:first-child').addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); moveGrid(-1); });
+    controls.querySelector('.tour-arrow:last-child').addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); moveGrid(1); });
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { section.classList.add('is-revealed'); reveal.disconnect(); } }), { threshold: .2 });
     reveal.observe(section);
   };
