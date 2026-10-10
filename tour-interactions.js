@@ -15,7 +15,7 @@
     head.appendChild(controls);
     const dedupe = new MutationObserver(() => { const nodes = [...document.querySelectorAll('.tour-arrows')]; nodes.slice(1).forEach(node => node.remove()); });
     dedupe.observe(head, { childList: true });
-    setTimeout(() => dedupe.disconnect(), 2500);
+    setTimeout(() => dedupe.disconnect(), 15000);
     if (grid.querySelectorAll('.package-card').length < 5) {
       const extra = document.createElement('article');
       extra.className = 'package-card demo';
