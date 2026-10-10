@@ -44,8 +44,13 @@
     });
     backdrop.addEventListener('click', () => close(grid.querySelector('.is-expanded')));
     document.addEventListener('keydown', event => { if (event.key === 'Escape') close(grid.querySelector('.is-expanded')); });
-    controls.querySelector('.tour-arrow:first-child').addEventListener('click', () => grid.scrollBy({ left: -grid.clientWidth * .82, behavior: 'smooth' }));
-    controls.querySelector('.tour-arrow:last-child').addEventListener('click', () => grid.scrollBy({ left: grid.clientWidth * .82, behavior: 'smooth' }));
+    const moveGrid = direction => {
+      const step = Math.max(220, grid.clientWidth * .82);
+      const target = Math.max(0, Math.min(grid.scrollLeft + direction * step, grid.scrollWidth - grid.clientWidth));
+      grid.scrollTo({ left: target, behavior: 'smooth' });
+    };
+    controls.querySelector('.tour-arrow:first-child').addEventListener('click', () => moveGrid(-1));
+    controls.querySelector('.tour-arrow:last-child').addEventListener('click', () => moveGrid(1));
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { section.classList.add('is-revealed'); reveal.disconnect(); } }), { threshold: .2 });
     reveal.observe(section);
   };
