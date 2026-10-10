@@ -1,0 +1,72 @@
+/* Scoped booking diagram; the panorama and tour rails are intentionally untouched. */
+.section.booking.booking-journey {
+  color: #24483b;
+  background: #faf9f3;
+  border: 1px solid #e1e5dc;
+  border-radius: 20px;
+  padding: 30px;
+  width: min(1180px, calc(100% - 40px));
+  margin: 24px auto;
+  overflow: hidden;
+  scroll-margin-top: 30px;
+}
+.booking-journey .wrap { width: 100%; padding: 0; }
+.journey-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+.booking-journey .journey-heading h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); line-height: 1.15; letter-spacing: -.025em; margin: 7px 0 0; text-transform: none; }
+.journey-heading p { color: #577065; font-size: .9rem; line-height: 1.5; margin: 0; max-width: 240px; }
+.journey-map { position: relative; isolation: isolate; }
+.journey-road { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: -1; }
+.journey-road path { fill: none; stroke-linecap: round; }
+.journey-road-base { stroke: #e0e6d9; stroke-width: 14; }
+.journey-road-markings { stroke: #fffef8; stroke-width: 2; stroke-dasharray: 3 8; }
+.journey-road-progress { stroke: #c1943b; stroke-width: 3; }
+.journey-stops { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.journey-step { position: relative; min-width: 0; padding-top: 58px; }
+.journey-pin { position: absolute; top: 12px; left: calc(50% - 17px); width: 34px; height: 34px; border: 3px solid #faf9f3; border-radius: 50%; color: #476e5e; background: #dce6d9; display: grid; place-items: center; transition: background .35s, color .35s, box-shadow .35s; }
+.journey-pin svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.journey-card { padding: 17px 18px; background: #fff; border: 1px solid #e0e5da; border-radius: 13px; height: 100%; box-sizing: border-box; transition: border-color .4s, background .4s, box-shadow .4s, transform .4s; }
+.journey-number { display: block; font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d7238; }
+.booking-journey .journey-card h3 { margin: 6px 0 5px; font-size: 1.2rem; line-height: 1.2; text-transform: none; letter-spacing: -.015em; }
+.journey-card h3 button { all: unset; cursor: pointer; border-radius: 3px; }
+.journey-card h3 button:focus-visible { outline: 2px solid #9c702b; outline-offset: 4px; }
+.journey-card p { font-size: .86rem; line-height: 1.55; color: #526a5e; margin: 0; }
+.journey-step.is-active .journey-card { background: #f5f8f0; border-color: #9ab19b; box-shadow: 0 7px 18px #224b3610; transform: translateY(-3px); }
+.journey-step.is-active .journey-pin { background: #285643; color: #fff; box-shadow: 0 0 0 5px #c3d4bc66; }
+.journey-step.is-visited .journey-pin { background: #e9d6a4; color: #675020; }
+.journey-rider { position: absolute; left: 0; top: 0; display: none; width: 57px; height: 47px; pointer-events: none; z-index: 2; will-change: transform; }
+.journey-rider svg { width: 100%; height: 100%; overflow: visible; }
+.journey-ready .journey-rider { display: block; }
+.journey-controls { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 12px; }
+.journey-controls[hidden] { display: none; }
+.journey-caption { margin-right: auto; color: #64766c; font-size: .73rem; }
+.journey-controls button { min-height: 38px; padding: 7px 11px; border: 1px solid #dce3d6; border-radius: 8px; background: transparent; font: inherit; font-size: .73rem; color: #365844; cursor: pointer; }
+.journey-controls button:hover { background: #e8eee2; }
+.journey-controls button:focus-visible { outline: 2px solid #9c702b; outline-offset: 2px; }
+.journey-pause:disabled { opacity: .45; cursor: default; }
+.journey-reveal .journey-card { animation: journey-arrive .65s backwards cubic-bezier(.2,.7,.2,1); }
+.journey-reveal .journey-step:nth-child(2) .journey-card { animation-delay: .12s; }
+.journey-reveal .journey-step:nth-child(3) .journey-card { animation-delay: .24s; }
+@keyframes journey-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 800px) {
+  .section.booking.booking-journey { width: calc(100% - 24px); margin: 12px auto; padding: 17px 14px 10px; border-radius: 15px; }
+  .journey-heading { display: block; margin-bottom: 13px; }
+  .booking-journey .journey-heading h2 { font-size: clamp(1.35rem, 5.4vw, 1.7rem); line-height: 1.15; margin-top: 5px; }
+  .journey-heading p { max-width: none; font-size: .78rem; line-height: 1.4; margin-top: 6px; }
+  .journey-stops { grid-template-columns: 1fr; gap: 10px; }
+  .journey-step { padding: 0 0 0 55px; }
+  .journey-pin { top: calc(50% - 17px); left: 6px; }
+  .journey-card { padding: 11px 12px; border-radius: 11px; }
+  .journey-number { font-size: .56rem; letter-spacing: .06em; }
+  .booking-journey .journey-card h3 { font-size: 1rem; margin: 4px 0; }
+  .journey-card p { font-size: .79rem; line-height: 1.4; }
+  .journey-rider { width: 43px; height: 35px; }
+  .journey-step.is-active .journey-card { transform: translateX(2px); }
+  .journey-controls { gap: 4px; margin-top: 6px; }
+  .journey-caption { display: none; }
+  .journey-controls button { min-height: 44px; font-size: .68rem; padding: 6px 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-card, .journey-pin { transition: none; }
+  .journey-reveal .journey-card { animation: none; }
+  .journey-rider { will-change: auto; }
+}

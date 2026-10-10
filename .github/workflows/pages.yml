@@ -35,11 +35,13 @@ jobs:
               f'<link rel="stylesheet" href="mobile-layout.css?v={sha}">'
               f'<link rel="stylesheet" href="travel-blog.css?v={sha}">'
               f'<link rel="stylesheet" href="nho-que-background.css?v={sha}">'
+              f'<link rel="stylesheet" href="booking-journey.css?v={sha}">'
               "</head>"
           )
           scripts = (
               f'<script src="tour-interactions.js?v={sha}"></script>'
               f'<script src="travel-blog.js?v={sha}"></script>'
+              f'<script src="booking-journey.js?v={sha}"></script>'
               f'<script src="nature-background-v7.js?v={sha}"></script>'
               "<script>const bg = new NatureBackground({logoText: 'SKY TRAVEL', "
               "showLogo: false, scrollSensitivity: 1.0, "
