@@ -67,14 +67,6 @@
 .tour-demo-note{margin:15px 0 0;color:#7d8f86;font-size:.76rem;line-height:1.5}
 body.tour-modal-open{overflow:hidden}
 
-/* Keep five complete cards in view, with the navigation controls outside the rail. */
-@media(min-width:801px){
-  .package-carousel{padding-inline:54px}
-  .package-grid{gap:14px;padding-inline:0;scroll-padding-inline:0}
-  .package-card{flex-basis:calc((100% - 56px)/5)!important}
-  .tour-arrows{inset-inline:0}
-}
-
 /* Soft corners applied consistently across the site's major blocks. */
 .nav{border-radius:18px!important}
 .hero{border-radius:22px;overflow:hidden}
@@ -86,9 +78,10 @@ body.tour-modal-open{overflow:hidden}
 .package-card{border-radius:20px}
 /* Larger, legible tour cards and a genuinely prominent detail view. */
 @media(min-width:801px){
-  .package-card{flex-basis:calc((100% - 42px)/4)!important}
-  .package-edge-space{flex-basis:calc((100% - 42px)/4)!important}
-  .package-edge-space:last-child{flex-basis:calc(2 * ((100% - 42px)/4) + 14px)!important}
+  .package-carousel{padding-inline:54px}
+  .package-grid{gap:14px;padding-inline:0;scroll-padding-inline:0}
+  .package-card{flex-basis:calc((100% - 56px)/5)!important}
+  .tour-arrows{inset-inline:0}
   .tour-card-image{height:clamp(150px,14vw,205px)}
   .tour-card-body{gap:12px;padding:20px 19px 18px}
   .tour-card-body h3{font-size:clamp(1.12rem,1.5vw,1.45rem)}
