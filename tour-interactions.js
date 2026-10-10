@@ -5,6 +5,7 @@
     const head = section?.querySelector('.head');
     if (!section || !grid || !head || section.dataset.tourReady) return;
     section.dataset.tourReady = 'true';
+    document.querySelectorAll('.tour-focus-backdrop').forEach(node => node.remove());
     const backdrop = document.createElement('div');
     backdrop.className = 'tour-focus-backdrop';
     document.body.appendChild(backdrop);
