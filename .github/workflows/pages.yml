@@ -20,7 +20,32 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - name: Add cache-busted tour interactions and Nho Que background
-        run: python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('</head>', '<link rel=\"stylesheet\" href=\"tour-carousel.css?v=${{ github.sha }}\"><link rel=\"stylesheet\" href=\"nho-que-background.css?v=${{ github.sha }}\"></head>'); s=s.replace('</body>', '<script src=\"tour-interactions.js?v=${{ github.sha }}\"></script><script src=\"nature-background.js?v=${{ github.sha }}\"></script><script>const bg = new NatureBackground({logoText: \'SKYHAGIANGLOOT\', showLogo: true, scrollSensitivity: 1.0});</script></body>'); p.write_text(s, encoding='utf-8')"
+        env:
+          PAGE_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+
+          page = Path("index.html")
+          source = page.read_text(encoding="utf-8")
+          sha = os.environ["PAGE_SHA"]
+          head = (
+              f'<link rel="stylesheet" href="tour-carousel.css?v={sha}">'
+              f'<link rel="stylesheet" href="nho-que-background.css?v={sha}">'
+              "</head>"
+          )
+          scripts = (
+              f'<script src="tour-interactions.js?v={sha}"></script>'
+              f'<script src="nature-background.js?v={sha}"></script>'
+              "<script>const bg = new NatureBackground({logoText: 'SKYHAGIANGLOOT', "
+              "showLogo: true, scrollSensitivity: 1.0});</script></body>"
+          )
+          page.write_text(
+              source.replace("</head>", head).replace("</body>", scripts),
+              encoding="utf-8",
+          )
+          PY
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
