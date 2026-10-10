@@ -33,11 +33,11 @@
       card.appendChild(copy);
       card.addEventListener('click', event => {
         if (event.target.closest('button')) return;
-        const open = card.classList.contains('is-expanded');
+        event.stopImmediatePropagation();
         cards.forEach(item => item.classList.remove('is-active'));
-        if (open) { close(card); return; }
+        if (card.classList.contains('is-expanded')) { close(card); return; }
         card.classList.add('is-expanded'); section.classList.add('has-expanded'); backdrop.classList.add('is-open'); document.body.classList.add('tour-modal-open'); card.setAttribute('aria-expanded', 'true');
-      });
+      }, true);
       card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); } });
       card.querySelector('.choose-package')?.addEventListener('click', event => { event.stopPropagation(); const select = document.querySelector('#package'); if (select) select.value = card.querySelector('.choose-package').dataset.package; document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); });
     });
