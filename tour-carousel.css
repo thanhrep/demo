@@ -14,7 +14,16 @@
   .package-card{flex-basis:calc((100% - 24px)/3)!important;border-radius:16px}
   .tour-arrow{border-radius:11px}
 }
-@media(max-width:520px){.package-card{flex-basis:calc((100% - 12px)/2)!important}}
+@media(max-width:520px){
+  .package-grid{gap:8px;padding-inline:4px 10px}
+  .package-card{flex-basis:calc((100% - 16px)/3)!important;padding:11px;gap:7px}
+  .package-card h3{font-size:.9rem;line-height:1.08}
+  .package-card p{font-size:.68rem;line-height:1.35}
+  .package-card strong{font-size:.74rem}
+  .package-card small{font-size:.6rem}
+  .package-card .tag{font-size:.55rem;padding:4px 6px}
+  .package-card .pill{font-size:.65rem;padding:8px 9px}
+}
 
 /* Consistent soft corners across the page. */
 .nav{border-radius:18px!important;overflow:visible}
