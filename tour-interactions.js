@@ -52,8 +52,13 @@
       cards[carouselIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       setTimeout(() => cards[carouselIndex]?.classList.remove('is-active'), 650);
     };
-    controls.querySelector('.tour-arrow:first-child').addEventListener('click', () => moveGrid(-1));
-    controls.querySelector('.tour-arrow:last-child').addEventListener('click', () => moveGrid(1));
+    controls.addEventListener('click', event => {
+      const button = event.target.closest('.tour-arrow');
+      if (!button) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      moveGrid(button === controls.querySelector('.tour-arrow:last-child') ? 1 : -1);
+    }, true);
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { section.classList.add('is-revealed'); reveal.disconnect(); } }), { threshold: .2 });
     reveal.observe(section);
   };
