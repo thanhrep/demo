@@ -8,10 +8,14 @@
     const backdrop = document.createElement('div');
     backdrop.className = 'tour-focus-backdrop';
     document.body.appendChild(backdrop);
+    document.querySelectorAll('.tour-arrows').forEach(node => node.remove());
     const controls = document.createElement('div');
     controls.className = 'tour-arrows';
     controls.innerHTML = '<button class="tour-arrow" type="button" aria-label="Gói tour trước">←</button><button class="tour-arrow" type="button" aria-label="Gói tour tiếp theo">→</button>';
     head.appendChild(controls);
+    const dedupe = new MutationObserver(() => { const nodes = [...document.querySelectorAll('.tour-arrows')]; nodes.slice(1).forEach(node => node.remove()); });
+    dedupe.observe(head, { childList: true });
+    setTimeout(() => dedupe.disconnect(), 2500);
     if (grid.querySelectorAll('.package-card').length < 5) {
       const extra = document.createElement('article');
       extra.className = 'package-card demo';
