@@ -1,5 +1,6 @@
 @import url("natural-sales-layout.css");
 @import url("mobile-polish.css");
+@import url("tour-carousel.css");
 /* Explicit site motion requested by the owner; the pause button always works. */
 body::before {
   inset:-5%;
