@@ -233,14 +233,16 @@
       if (event && grid.hasPointerCapture(dragPointerId)) grid.releasePointerCapture(dragPointerId);
       dragPointerId = null;
       grid.classList.remove('is-dragging');
-      let velocity = Math.max(-2.1, Math.min(2.1, dragVelocity * 16));
+      // Keep a deliberate, controlled glide: enough momentum to feel like a swipe,
+      // but short enough that the carousel settles cleanly on the next card.
+      let velocity = Math.max(-1.45, Math.min(1.45, dragVelocity * 12));
       let previous = performance.now();
       const coast = now => {
         const elapsed = Math.min(32, now - previous);
         previous = now;
         grid.scrollLeft += velocity * elapsed;
-        velocity *= Math.pow(.94, elapsed / 16);
-        if (Math.abs(velocity) > .08) momentumFrame = requestAnimationFrame(coast);
+        velocity *= Math.pow(.89, elapsed / 16);
+        if (Math.abs(velocity) > .055) momentumFrame = requestAnimationFrame(coast);
         else {
           grid.style.removeProperty('scroll-snap-type');
           const nearest = nearestCardIndex();
