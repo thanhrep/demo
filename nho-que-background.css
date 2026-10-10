@@ -1,7 +1,6 @@
-/* Place the Nho Que scene between the site's rotating photo backdrop and content. */
-.scene-bg{opacity:.34!important}
-.skyhagiang-bg-wrapper{opacity:.72;mix-blend-mode:normal;transition:opacity .8s ease}
+/* The supplied real-time landscape is now the sole page/hero backdrop. */
+body:before,body:after,.scene-bg,.atmosphere,.hero .slides,.story:before{display:none!important}
+.hero{background:transparent!important}
+.hero:after{background:linear-gradient(90deg,#041e1d52,#062d2a12 68%),linear-gradient(0deg,#092e2a54,transparent 38%)!important}
+.skyhagiang-bg-wrapper{opacity:1;mix-blend-mode:normal}
 .skyhagiang-bg-wrapper canvas{pointer-events:none}
-@media(max-width:800px){.scene-bg{opacity:.28!important}.skyhagiang-bg-wrapper{opacity:.64}}
-@media(prefers-reduced-motion:reduce){.skyhagiang-bg-wrapper{opacity:.4}}
-

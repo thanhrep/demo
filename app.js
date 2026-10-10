@@ -34,15 +34,6 @@ document.querySelectorAll('img').forEach(img => {
   img.onerror = fallback;
   if (img.complete && !img.naturalWidth) fallback();
 });
-const backgroundImages = ['assets/bg-01.jpg','assets/bg-02.jpg','assets/bg-03.jpg','assets/bg-04.jpg','assets/bg-05.jpg','assets/bg-06.jpg','assets/bg-07.jpg','assets/bg-08.jpg'];
-const scene = document.querySelector('.scene-bg');
-let sceneIndex = 0;
-function rotateBackground() {
-  scene.style.backgroundImage = 'url("' + backgroundImages[sceneIndex] + '")';
-  sceneIndex = (sceneIndex + 1) % backgroundImages.length;
-}
-rotateBackground();
-setInterval(rotateBackground, 9000);
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let current = 0;
 slides[0].classList.add('active');

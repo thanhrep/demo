@@ -242,10 +242,10 @@
           showLogo: true,
           scrollSensitivity: 1.0,
           autoDriveSpeed: 1.35, // Tốc độ xe và cung đường trôi tự động ngay cả khi chưa cuộn chuột
-          reducedMotion: false,
           mouseParallax: true,
-          maxPixelRatio: 1.35,
-          zIndex: -1
+          maxPixelRatio: window.innerWidth < 800 ? 1.1 : 1.35,
+          reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+          zIndex: 1
         },
         options
       );
@@ -402,7 +402,7 @@
           1,
           document.documentElement.scrollHeight - window.innerHeight
         );
-        this.targetScroll = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        this.targetScroll = this.options.reducedMotion ? 0 : Math.min(1, Math.max(0, window.scrollY / maxScroll));
       };
       this._onMouseMove = (e) => {
         if (!this.options.mouseParallax) return;
@@ -936,8 +936,8 @@
 
     _animate(now) {
       if (this.isDestroyed) return;
-      if (document.hidden) { this.lastFrame = now; requestAnimationFrame(this._animate); return; }
-      if (now - this.lastRender < 1000 / 30) { requestAnimationFrame(this._animate); return; }
+      if (document.hidden) { this.lastFrame = now; if (!this.options.reducedMotion) requestAnimationFrame(this._animate); return; }
+      if (!this.options.reducedMotion && now - this.lastRender < 1000 / 30) { requestAnimationFrame(this._animate); return; }
       this.lastRender = now;
       const dt = Math.min(0.05, (now - this.lastFrame) * 0.001);
       this.lastFrame = now;
@@ -948,9 +948,9 @@
       this.scrollVelocity = (this.currentScroll - prevScroll) * 60.0;
 
       // Quãng đường di chuyển trên đèo tăng liên tục theo cả thời gian thực VÀ thao tác lướt trang
-      this.travelZ +=
-        dt * this.options.autoDriveSpeed +
-        Math.abs(this.currentScroll - prevScroll) * 28.0 * this.options.scrollSensitivity;
+      if (!this.options.reducedMotion) {
+        this.travelZ += dt * this.options.autoDriveSpeed + Math.abs(this.currentScroll - prevScroll) * 28.0 * this.options.scrollSensitivity;
+      }
 
       this.currentMouse.x += (this.targetMouse.x - this.currentMouse.x) * 0.06;
       this.currentMouse.y += (this.targetMouse.y - this.currentMouse.y) * 0.06;
@@ -969,7 +969,7 @@
       }
 
       this._renderWorld(this.worldCanvas.width, this.worldCanvas.height, this.dpr);
-      requestAnimationFrame(this._animate);
+      if (!this.options.reducedMotion) requestAnimationFrame(this._animate);
     }
 
     destroy() {
@@ -989,7 +989,3 @@
 
   global.NatureBackground = NatureBackground;
 })(typeof window !== 'undefined' ? window : this);
-
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-new NatureBackground({ showLogo: false, reducedMotion, autoDriveSpeed: reducedMotion ? 0 : 0.9, scrollSensitivity: 0.7, mouseParallax: false, maxPixelRatio: window.innerWidth < 800 ? 1.1 : 1.35, zIndex: 1 });
-
