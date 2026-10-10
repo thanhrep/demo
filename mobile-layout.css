@@ -303,6 +303,20 @@ svg {
     border-radius: 22px;
   }
 
+  .package-card.is-current {
+    transform: translateY(-3px) scale(1.015) !important;
+  }
+
+  .package-card.is-transitioning {
+    animation: mobileCarouselFocus 0.82s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes mobileCarouselFocus {
+    0% { transform: scale(0.99); filter: brightness(0.96); }
+    58% { transform: translateY(-4px) scale(1.025); filter: brightness(1.03); }
+    100% { transform: translateY(-3px) scale(1.015); filter: brightness(1); }
+  }
+
   .tour-card-image {
     height: clamp(170px, 54vw, 220px);
   }
