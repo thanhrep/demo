@@ -244,7 +244,8 @@
           autoDriveSpeed: 1.35, // Tốc độ xe và cung đường trôi tự động ngay cả khi chưa cuộn chuột
           mouseParallax: true,
           maxPixelRatio: window.innerWidth < 800 ? 1.1 : 1.35,
-          reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+          // Keep the scenic background animated even when OS reduced-motion is enabled.
+          reducedMotion: false,
           zIndex: 1
         },
         options
@@ -402,7 +403,7 @@
           1,
           document.documentElement.scrollHeight - window.innerHeight
         );
-        this.targetScroll = this.options.reducedMotion ? 0 : Math.min(1, Math.max(0, window.scrollY / maxScroll));
+        this.targetScroll = Math.min(1, Math.max(0, window.scrollY / maxScroll));
       };
       this._onMouseMove = (e) => {
         if (!this.options.mouseParallax) return;
@@ -936,21 +937,19 @@
 
     _animate(now) {
       if (this.isDestroyed) return;
-      if (document.hidden) { this.lastFrame = now; if (!this.options.reducedMotion) requestAnimationFrame(this._animate); return; }
-      if (!this.options.reducedMotion && now - this.lastRender < 1000 / 30) { requestAnimationFrame(this._animate); return; }
+      if (document.hidden) { this.lastFrame = now; requestAnimationFrame(this._animate); return; }
+      if (now - this.lastRender < 1000 / 30) { requestAnimationFrame(this._animate); return; }
       this.lastRender = now;
       const dt = Math.min(0.05, (now - this.lastFrame) * 0.001);
       this.lastFrame = now;
-      this.time = this.options.reducedMotion ? 0 : now * 0.001;
+      this.time = now * 0.001;
 
       const prevScroll = this.currentScroll;
       this.currentScroll += (this.targetScroll - this.currentScroll) * 0.08;
       this.scrollVelocity = (this.currentScroll - prevScroll) * 60.0;
 
       // Quãng đường di chuyển trên đèo tăng liên tục theo cả thời gian thực VÀ thao tác lướt trang
-      if (!this.options.reducedMotion) {
-        this.travelZ += dt * this.options.autoDriveSpeed + Math.abs(this.currentScroll - prevScroll) * 28.0 * this.options.scrollSensitivity;
-      }
+      this.travelZ += dt * this.options.autoDriveSpeed + Math.abs(this.currentScroll - prevScroll) * 28.0 * this.options.scrollSensitivity;
 
       this.currentMouse.x += (this.targetMouse.x - this.currentMouse.x) * 0.06;
       this.currentMouse.y += (this.targetMouse.y - this.currentMouse.y) * 0.06;
@@ -969,7 +968,7 @@
       }
 
       this._renderWorld(this.worldCanvas.width, this.worldCanvas.height, this.dpr);
-      if (!this.options.reducedMotion) requestAnimationFrame(this._animate);
+      requestAnimationFrame(this._animate);
     }
 
     destroy() {
