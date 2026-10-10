@@ -5,7 +5,8 @@
   display:flex!important;grid-template-columns:none!important;gap:14px;
   overflow-x:auto!important;overflow-y:visible;scroll-snap-type:x mandatory;
   scroll-behavior:smooth!important;scrollbar-width:none;overscroll-behavior-x:contain;
-  touch-action:pan-x;scrollbar-gutter:stable; padding:26px 0 34px;cursor:grab;
+  /* Keep touch scrolling native on both axes; custom drag is mouse-only. */
+  touch-action:auto;overscroll-behavior-y:auto;scrollbar-gutter:stable; padding:26px 0 34px;cursor:grab;
   scroll-snap-stop:always;
 }
 .package-grid.is-dragging{cursor:grabbing;scroll-behavior:auto!important;user-select:none}
