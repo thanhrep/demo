@@ -45,6 +45,14 @@
       grid.appendChild(card);
     });
 
+    const leadingSpace = document.createElement('span');
+    const trailingSpace = document.createElement('span');
+    leadingSpace.className = trailingSpace.className = 'package-edge-space';
+    leadingSpace.setAttribute('aria-hidden', 'true');
+    trailingSpace.setAttribute('aria-hidden', 'true');
+    grid.prepend(leadingSpace);
+    grid.appendChild(trailingSpace);
+
     const carousel = document.createElement('div');
     carousel.className = 'package-carousel';
     grid.parentNode.insertBefore(carousel, grid);
@@ -113,7 +121,11 @@
     };
     grid.addEventListener('scroll', setCenterCard, { passive: true });
     window.addEventListener('resize', setCenterCard, { passive: true });
-    setCenterCard();
+    requestAnimationFrame(() => {
+      const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
+      grid.scrollLeft = leadingSpace.offsetWidth + gap;
+      setCenterCard();
+    });
 
     const move = direction => {
       const gridRect = grid.getBoundingClientRect();
