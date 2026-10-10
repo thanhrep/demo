@@ -68,36 +68,3 @@ document.querySelector('#form').addEventListener('submit', e => {
   status.replaceChildren('Your draft is ready. Send it from your email app: ', link);
 });
 
-const packageSection = document.querySelector('.packages');
-const packageGrid = document.querySelector('.package-grid');
-if (packageSection && packageGrid) {
-  const backdrop = document.createElement('div');
-  backdrop.className = 'tour-focus-backdrop';
-  document.body.appendChild(backdrop);
-  const arrows = document.createElement('div');
-  arrows.className = 'tour-arrows';
-  arrows.innerHTML = '<button class="tour-arrow" type="button" aria-label="Gói tour trước">←</button><button class="tour-arrow" type="button" aria-label="Gói tour tiếp theo">→</button>';
-  packageSection.querySelector('.head').appendChild(arrows);
-  const cards = [...packageGrid.querySelectorAll('.package-card')];
-  cards.forEach((card, index) => {
-    card.setAttribute('tabindex', '0');
-    const copy = document.createElement('div'); copy.className = 'card-expand-copy';
-    copy.textContent = 'Xem lịch trình, dịch vụ bao gồm và nhận tư vấn riêng cho gói ' + (card.querySelector('h3')?.textContent || 'tour') + '.';
-    card.appendChild(copy);
-    card.addEventListener('click', event => {
-      if (event.target.closest('button')) return;
-      if (card.classList.contains('is-expanded')) { closeTour(card); return; }
-      cards.forEach(other => other.classList.remove('is-active'));
-      card.classList.add('is-expanded'); packageSection.classList.add('has-expanded'); backdrop.classList.add('is-open'); document.body.classList.add('tour-modal-open');
-      card.setAttribute('aria-expanded', 'true');
-    });
-    card.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); } });
-  });
-  function closeTour(card) { card.classList.remove('is-expanded'); packageSection.classList.remove('has-expanded'); backdrop.classList.remove('is-open'); document.body.classList.remove('tour-modal-open'); card.removeAttribute('aria-expanded'); }
-  backdrop.addEventListener('click', () => { const open = packageGrid.querySelector('.is-expanded'); if (open) closeTour(open); });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape') { const open = packageGrid.querySelector('.is-expanded'); if (open) closeTour(open); } });
-  arrows.querySelector('.tour-arrow:first-child').addEventListener('click', () => packageGrid.scrollBy({ left: -packageGrid.clientWidth * .82, behavior: 'smooth' }));
-  arrows.querySelector('.tour-arrow:last-child').addEventListener('click', () => packageGrid.scrollBy({ left: packageGrid.clientWidth * .82, behavior: 'smooth' }));
-  const reveal = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { packageSection.classList.add('is-revealed'); reveal.disconnect(); } }), { threshold: .2 });
-  reveal.observe(packageSection);
-}
