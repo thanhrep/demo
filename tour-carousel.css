@@ -75,6 +75,18 @@ body.tour-modal-open{overflow:hidden}
 .gallery img,.discover-grid article{border-radius:18px;overflow:hidden}
 .steps article{border-radius:18px}
 .package-card{border-radius:20px}
+/* Larger, legible tour cards and a genuinely prominent detail view. */
+@media(min-width:801px){
+  .package-card{flex-basis:calc((100% - 42px)/4)!important}
+  .package-edge-space{flex-basis:calc((100% - 42px)/4)!important}
+  .package-edge-space:last-child{flex-basis:calc(2 * ((100% - 42px)/4) + 14px)!important}
+  .tour-card-image{height:clamp(150px,14vw,205px)}
+  .tour-card-body{gap:12px;padding:20px 19px 18px}
+  .tour-card-body h3{font-size:clamp(1.12rem,1.5vw,1.45rem)}
+  .tour-card-body p{font-size:.94rem}
+  .tour-detail-panel{width:min(1120px,calc(100vw - 64px));max-height:92svh}
+  .tour-detail-image{height:clamp(300px,40vh,440px)}
+}
 .contactbox{border-radius:24px!important;overflow:hidden}
 .form input,.form textarea,.form select{border-radius:12px}
 .site-footer{border-radius:20px 20px 0 0;overflow:hidden}
@@ -97,9 +109,11 @@ body.tour-modal-open{overflow:hidden}
   .tour-arrows{inset:50% 0 auto}
   .tour-arrow{width:38px;height:38px;border-radius:12px;font-size:1.15rem}
   .tour-detail-overlay{padding:12px}
-  .tour-detail-panel{width:100%;max-height:92svh;border-radius:22px}
-  .tour-detail-image{height:clamp(150px,24vh,230px)}
-  .tour-detail-copy{padding:20px}
+  .tour-detail-overlay{padding:8px}
+  .tour-detail-panel{width:min(100%,640px);max-height:96svh;border-radius:24px}
+  .tour-detail-image{height:clamp(220px,34svh,340px)}
+  .tour-detail-copy{padding:clamp(20px,5vw,30px)}
+  .tour-detail-copy h2{font-size:clamp(2rem,8vw,3rem)}
   .tour-detail-columns{grid-template-columns:1fr;gap:12px;margin:18px 0}
   .tour-detail-columns>div{padding:15px;border-radius:15px}
   .tour-detail-footer{align-items:stretch;flex-direction:column;gap:12px}
