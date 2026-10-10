@@ -32,6 +32,7 @@
     packages.forEach((item, index) => {
       const card = document.createElement('article');
       card.className = `package-card${index === 3 ? ' featured' : ''}${index >= 5 ? ' demo-package' : ''}`;
+      card.dataset.packageIndex = String(index);
       card.tabIndex = 0;
       card.setAttribute('role', 'group');
       card.setAttribute('aria-haspopup', 'dialog');
@@ -45,13 +46,34 @@
       grid.appendChild(card);
     });
 
-    const leadingSpace = document.createElement('span');
-    const trailingSpace = document.createElement('span');
-    leadingSpace.className = trailingSpace.className = 'package-edge-space';
-    leadingSpace.setAttribute('aria-hidden', 'true');
-    trailingSpace.setAttribute('aria-hidden', 'true');
-    grid.prepend(leadingSpace);
-    grid.appendChild(trailingSpace);
+    const originalCards = [...grid.querySelectorAll('.package-card')];
+    const loopCloneCount = Math.min(6, originalCards.length);
+    const bindClone = card => {
+      const item = packages[Number(card.dataset.packageIndex)];
+      card.addEventListener('click', () => openDetail(item, card));
+      card.addEventListener('keydown', event => {
+        if (event.target === card && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          openDetail(item, card);
+        }
+      });
+      card.querySelector('button').addEventListener('click', event => {
+        event.stopPropagation();
+        openDetail(item, card);
+      });
+    };
+    originalCards.slice(-loopCloneCount).reverse().forEach(source => {
+      const clone = source.cloneNode(true);
+      clone.dataset.loopClone = 'true';
+      bindClone(clone);
+      grid.prepend(clone);
+    });
+    originalCards.slice(0, loopCloneCount).forEach(source => {
+      const clone = source.cloneNode(true);
+      clone.dataset.loopClone = 'true';
+      bindClone(clone);
+      grid.append(clone);
+    });
 
     const carousel = document.createElement('div');
     carousel.className = 'package-carousel';
@@ -104,48 +126,138 @@
 
     const cards = [...grid.querySelectorAll('.package-card')];
     let centerFrame = 0;
+    let settleTimer = 0;
+    let recentering = false;
+    const centeredScrollLeft = card => {
+      const gridRect = grid.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      return grid.scrollLeft + cardRect.left + cardRect.width / 2 - (gridRect.left + grid.clientWidth / 2);
+    };
+    const nearestCardIndex = () => {
+      const center = grid.getBoundingClientRect().left + grid.clientWidth / 2;
+      let nearest = 0;
+      let distance = Infinity;
+      cards.forEach((card, index) => {
+        const rect = card.getBoundingClientRect();
+        const delta = Math.abs(rect.left + rect.width / 2 - center);
+        if (delta < distance) { distance = delta; nearest = index; }
+      });
+      return nearest;
+    };
     const setCenterCard = () => {
       cancelAnimationFrame(centerFrame);
       centerFrame = requestAnimationFrame(() => {
-        const rect = grid.getBoundingClientRect();
-        const center = rect.left + rect.width / 2;
-        let closest = 0;
-        let distance = Infinity;
-        cards.forEach((card, index) => {
-          const box = card.getBoundingClientRect();
-          const d = Math.abs(box.left + box.width / 2 - center);
-          if (d < distance) { distance = d; closest = index; }
-        });
+        const closest = nearestCardIndex();
         cards.forEach((card, index) => card.classList.toggle('is-current', index === closest));
       });
     };
-    grid.addEventListener('scroll', setCenterCard, { passive: true });
+    const recenterIfOnClone = () => {
+      if (recentering || dragging) return;
+      const nearest = nearestCardIndex();
+      const card = cards[nearest];
+      if (!card?.dataset.loopClone) return;
+      const originalIndex = loopCloneCount + Number(card.dataset.packageIndex);
+      const original = cards[originalIndex];
+      if (!original) return;
+      recentering = true;
+      grid.style.scrollSnapType = 'none';
+      grid.style.scrollBehavior = 'auto';
+      grid.scrollLeft = centeredScrollLeft(original);
+      requestAnimationFrame(() => {
+        grid.style.removeProperty('scroll-behavior');
+        grid.style.removeProperty('scroll-snap-type');
+        recentering = false;
+        setCenterCard();
+      });
+    };
+    grid.addEventListener('scroll', () => {
+      setCenterCard();
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(recenterIfOnClone, 180);
+    }, { passive: true });
+    grid.addEventListener('scrollend', recenterIfOnClone, { passive: true });
     window.addEventListener('resize', setCenterCard, { passive: true });
     requestAnimationFrame(() => {
-      const gap = parseFloat(getComputedStyle(grid).columnGap) || 0;
-      grid.scrollLeft = leadingSpace.offsetWidth + gap;
+      grid.scrollLeft = centeredScrollLeft(cards[loopCloneCount]);
       setCenterCard();
     });
 
     const move = direction => {
-      const gridRect = grid.getBoundingClientRect();
-      const center = gridRect.left + grid.clientWidth / 2;
-      let current = 0;
-      let distance = Infinity;
-      cards.forEach((card, index) => {
-        const box = card.getBoundingClientRect();
-        const d = Math.abs(box.left + box.width / 2 - center);
-        if (d < distance) { distance = d; current = index; }
-      });
-      const next = Math.max(0, Math.min(cards.length - 1, current + direction));
-      const cardRect = cards[next].getBoundingClientRect();
-      const target = Math.max(0, Math.min(grid.scrollLeft + cardRect.left + cardRect.width / 2 - center, grid.scrollWidth - grid.clientWidth));
+      const current = nearestCardIndex();
+      const next = (current + direction + cards.length) % cards.length;
+      const target = centeredScrollLeft(cards[next]);
       grid.scrollTo({ left: target, behavior: 'smooth' });
       cards[next].classList.add('is-transitioning');
       setTimeout(() => cards[next].classList.remove('is-transitioning'), 850);
     };
     controls.querySelector('.tour-arrow:first-child').addEventListener('click', () => move(-1));
     controls.querySelector('.tour-arrow:last-child').addEventListener('click', () => move(1));
+
+    let dragging = false;
+    let dragPointerId = null;
+    let dragStartX = 0;
+    let dragStartScroll = 0;
+    let dragLastX = 0;
+    let dragLastTime = 0;
+    let dragVelocity = 0;
+    let dragMoved = false;
+    let momentumFrame = 0;
+    grid.addEventListener('pointerdown', event => {
+      if (event.pointerType !== 'mouse' || event.button !== 0 || event.target.closest('button')) return;
+      dragging = true;
+      dragMoved = false;
+      dragPointerId = event.pointerId;
+      dragStartX = dragLastX = event.clientX;
+      dragStartScroll = grid.scrollLeft;
+      dragLastTime = performance.now();
+      dragVelocity = 0;
+      cancelAnimationFrame(momentumFrame);
+      grid.style.scrollSnapType = 'none';
+      grid.classList.add('is-dragging');
+      grid.setPointerCapture(event.pointerId);
+    });
+    grid.addEventListener('pointermove', event => {
+      if (!dragging || event.pointerId !== dragPointerId) return;
+      const now = performance.now();
+      const delta = event.clientX - dragStartX;
+      if (Math.abs(delta) > 5) dragMoved = true;
+      grid.scrollLeft = dragStartScroll - delta;
+      const elapsed = Math.max(1, now - dragLastTime);
+      dragVelocity = (dragLastX - event.clientX) / elapsed;
+      dragLastX = event.clientX;
+      dragLastTime = now;
+    });
+    const endDrag = event => {
+      if (!dragging || (event && event.pointerId !== dragPointerId)) return;
+      dragging = false;
+      if (event && grid.hasPointerCapture(dragPointerId)) grid.releasePointerCapture(dragPointerId);
+      dragPointerId = null;
+      grid.classList.remove('is-dragging');
+      let velocity = Math.max(-2.1, Math.min(2.1, dragVelocity * 16));
+      let previous = performance.now();
+      const coast = now => {
+        const elapsed = Math.min(32, now - previous);
+        previous = now;
+        grid.scrollLeft += velocity * elapsed;
+        velocity *= Math.pow(.94, elapsed / 16);
+        if (Math.abs(velocity) > .08) momentumFrame = requestAnimationFrame(coast);
+        else {
+          grid.style.removeProperty('scroll-snap-type');
+          const nearest = nearestCardIndex();
+          grid.scrollTo({ left: centeredScrollLeft(cards[nearest]), behavior: 'smooth' });
+          setTimeout(recenterIfOnClone, 650);
+        }
+      };
+      momentumFrame = requestAnimationFrame(coast);
+    };
+    grid.addEventListener('pointerup', endDrag);
+    grid.addEventListener('pointercancel', endDrag);
+    grid.addEventListener('click', event => {
+      if (!dragMoved) return;
+      event.preventDefault();
+      event.stopPropagation();
+      dragMoved = false;
+    }, true);
 
     const reveal = new IntersectionObserver(entries => entries.forEach(entry => {
       if (entry.isIntersecting) { section.classList.add('is-revealed'); reveal.disconnect(); }

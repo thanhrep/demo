@@ -1,12 +1,13 @@
 /* Tour packages carousel and cinematic detail transition. */
 .packages{position:relative}
-.package-carousel{position:relative;margin-inline:0;padding-block:12px 22px}
+.package-carousel{position:relative;margin-inline:0;padding:12px 0 22px}
 .package-grid{
   display:flex!important;grid-template-columns:none!important;gap:14px;
   overflow-x:auto!important;overflow-y:visible;scroll-snap-type:x mandatory;
   scroll-behavior:smooth!important;scrollbar-width:none;overscroll-behavior-x:contain;
-  touch-action:pan-x;scrollbar-gutter:stable; padding:14px 48px 22px;
+  touch-action:pan-x;scrollbar-gutter:stable; padding:26px 0 34px;cursor:grab;
 }
+.package-grid.is-dragging{cursor:grabbing;scroll-behavior:auto!important;user-select:none}
 .package-grid::-webkit-scrollbar{display:none}
 .package-card{
   position:relative;display:flex;flex:0 0 calc((100% - 56px)/5)!important;flex-direction:column;
@@ -27,7 +28,7 @@
 .tour-card-body small{color:#58756b;font-size:.68rem;font-weight:600}
 .tour-detail-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:38px;margin-top:2px;padding:9px 12px;border:0;border-radius:11px;background:#9bbeb3;color:#fff;font:700 .77rem "DM Sans",sans-serif;cursor:pointer;transition:background .35s,transform .35s}
 .tour-detail-trigger:hover{background:#527f70;transform:translateY(-2px)}
-.package-card.is-current{transform:translateY(-4px) scale(1.015);border-color:#a0c3b5;box-shadow:0 18px 40px #18382d32}
+.package-card.is-current{z-index:3;transform:translateY(-9px) scale(1.065);border-color:#a0c3b5;box-shadow:0 24px 48px #18382d45}
 .package-card.is-transitioning{animation:carouselFocus .82s cubic-bezier(.16,1,.3,1)}
 @keyframes carouselFocus{0%{transform:scale(.96);filter:brightness(.94)}58%{transform:translateY(-8px) scale(1.055);filter:brightness(1.05)}100%{transform:translateY(-4px) scale(1.015);filter:brightness(1)}}
 @media(hover:hover) and (min-width:801px){
@@ -66,6 +67,14 @@
 .tour-demo-note{margin:15px 0 0;color:#7d8f86;font-size:.76rem;line-height:1.5}
 body.tour-modal-open{overflow:hidden}
 
+/* Keep five complete cards in view, with the navigation controls outside the rail. */
+@media(min-width:801px){
+  .package-carousel{padding-inline:54px}
+  .package-grid{gap:14px;padding-inline:0;scroll-padding-inline:0}
+  .package-card{flex-basis:calc((100% - 56px)/5)!important}
+  .tour-arrows{inset-inline:0}
+}
+
 /* Soft corners applied consistently across the site's major blocks. */
 .nav{border-radius:18px!important}
 .hero{border-radius:22px;overflow:hidden}
@@ -91,7 +100,7 @@ body.tour-modal-open{overflow:hidden}
 .form input,.form textarea,.form select{border-radius:12px}
 .site-footer{border-radius:20px 20px 0 0;overflow:hidden}
 @media(max-width:800px){
-  .package-carousel{padding-block:10px 18px}
+  .package-carousel{padding:10px 0 18px}
   .package-grid{gap:10px;padding:12px 40px 18px;scroll-padding-inline:40px}
   .package-card{flex-basis:calc((100% - 20px)/3)!important;border-radius:17px}
   .package-edge-space{flex-basis:calc((100% - 20px)/3)!important}
@@ -104,7 +113,7 @@ body.tour-modal-open{overflow:hidden}
   .tour-card-body>strong{font-size:.72rem}
   .tour-card-body small{font-size:.58rem}
   .tour-detail-trigger{min-height:32px;padding:7px 8px;border-radius:9px;font-size:.64rem}
-  .package-card.is-current{z-index:2;transform:translateY(-7px) scale(1.07);box-shadow:0 18px 38px #18382d3d}
+  .package-card.is-current{z-index:3;transform:translateY(-5px) scale(1.045);box-shadow:0 20px 40px #18382d40}
   @keyframes carouselFocus{0%{transform:scale(.96);filter:brightness(.94)}58%{transform:translateY(-10px) scale(1.1);filter:brightness(1.05)}100%{transform:translateY(-7px) scale(1.07);filter:brightness(1)}}
   .tour-arrows{inset:50% 0 auto}
   .tour-arrow{width:38px;height:38px;border-radius:12px;font-size:1.15rem}
