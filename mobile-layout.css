@@ -1,4 +1,5 @@
-/* Mobile layout: preserve readable card widths instead of squeezing desktop columns. */
+/* Responsive layout, loaded after theme styles so mobile geometry stays consistent. */
+.mobile-copy { display: none; }
 html,
 body {
   max-width: 100%;
@@ -472,4 +473,84 @@ svg {
   .date-row {
     grid-template-columns: 1fr;
   }
+}
+
+/* Compact mobile composition: shared gutters and connected section surfaces. */
+@media (max-width: 800px) {
+  body > main { display: flex; flex-direction: column; }
+  body > .nav {
+    position: relative !important;
+    top: 0; left: auto; right: auto;
+    width: calc(100% - 24px); margin: 8px auto 0;
+    padding: 8px 12px; min-height: 56px;
+    border-radius: 12px !important;
+  }
+  .navin { min-height: 40px; }
+  .brand img { width: 38px; height: 38px; border-radius: 8px; }
+  .menu { color: #315847; width: 40px; height: 40px; padding: 0; }
+  .links.is-open { top: 58px; right: 0; }
+  body > .hero {
+    width: calc(100% - 24px); margin: 8px auto 0;
+    height: auto; min-height: 0; max-height: none;
+    padding: 40px 18px 30px; border-radius: 14px;
+  }
+  .hero .heroContent { width: 100%; max-width: none; padding: 0; }
+  .hero .eyebrow { font-size: .61rem; letter-spacing: .09em; line-height: 1.5; color: #d7e7dd; }
+  .hero h1 { max-width: none; margin: 12px 0; font-size: clamp(2.15rem, 9.8vw, 3.5rem); line-height: 1.04; letter-spacing: -.025em; }
+  .hero p { max-width: none; margin: 0; font-size: .9rem; line-height: 1.5; }
+  .hero .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; }
+  .hero .actions .pill { min-height: 44px; padding: 10px 9px; border-radius: 8px; font-size: .74rem; line-height: 1.3; text-align: center; }
+  .wrap, .section.wrap { width: calc(100% - 24px); padding-inline: 0; margin-inline: auto; }
+  .section { padding-block: 24px; }
+  .section .head { padding: 14px; margin-bottom: 12px; border-radius: 14px; background: #faf8f1f5; box-shadow: none; }
+  .section .head h2, .booking .head h2, .discover .head h2 { font-size: clamp(1.55rem, 6.7vw, 2rem); line-height: 1.12; letter-spacing: -.015em; margin: 7px 0 0; color: #2f4b3e; }
+  .head .kicker { font-size: .6rem; letter-spacing: .1em; line-height: 1.45; }
+  .head .intro { margin: 10px 0 0; font-size: .86rem; line-height: 1.5; color: #52695e; }
+  #tours .card { flex-basis: calc(100% - 18px); border-radius: 12px; }
+  #tours .card img { height: clamp(150px, 43vw, 190px); }
+  #tours .cardbody { padding: 14px; }
+  #tours .card h3 { font-size: 1.2rem; margin: 10px 0 7px; }
+  #tours .card p { font-size: .86rem; margin-bottom: 10px; }
+  .storyin { gap: 12px; }
+  .storyin > div:first-child, .storyin .stats { padding: 18px 16px; border-radius: 14px; }
+  .story h2 { font-size: 1.7rem; }
+  .story p { margin: 10px 0; font-size: .87rem; line-height: 1.5; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: none; grid-auto-rows: clamp(130px, 40vw, 175px); gap: 8px; }
+  .gallery img:first-child { grid-column: auto; grid-row: auto; }
+  .section.booking { padding: 20px 12px; border-radius: 14px; margin: 12px; width: calc(100% - 24px); }
+  .booking .wrap { width: 100%; }
+  .booking .head { padding: 0; }
+  .steps article { padding: 14px; border-radius: 10px; }
+  .steps h3 { margin: 8px 0 5px; font-size: .95rem; }
+  .steps p { font-size: .83rem; line-height: 1.45; }
+  .packages.wrap {
+    order: -1; width: calc(100% - 24px); padding: 16px 0 10px;
+    margin: 16px auto 0; border: 1px solid #ffffffb5; border-radius: 16px;
+    background: #f7f5edf5; box-shadow: 0 8px 24px #17382d18;
+  }
+  .packages .head { padding: 0 14px; margin: 0 0 4px; background: transparent; border: 0; backdrop-filter: none; }
+  .packages .head h2 { font-size: clamp(1.5rem, 6.4vw, 1.9rem); }
+  .packages .desktop-copy { display: none; }
+  .packages .mobile-copy { display: inline; }
+  .packages .head .intro { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .packages .package-carousel { width: 100%; margin: 0; padding: 8px 0 4px; }
+  .packages .package-grid { gap: 16px; padding: 12px 20px 14px; scroll-padding-inline: 20px; touch-action: auto; align-items: stretch; }
+  .packages .package-card { flex-basis: calc(100% - 12px) !important; min-height: 0; padding: 0; border-radius: 12px; background: #fff; }
+  .packages .package-card.is-current { transform: translateY(-3px) scale(1.02) !important; box-shadow: 0 10px 20px #18382d24; }
+  .packages .tour-card-image { width: 100%; height: clamp(155px, 46vw, 195px); margin: 0; border-radius: 0; }
+  .packages .tour-card-body { padding: 13px 14px 14px; gap: 9px; }
+  .packages .tour-card-body h3 { font-size: 1.1rem; line-height: 1.16; letter-spacing: .01em; }
+  .packages .tour-card-body p { min-height: 0; font-size: .85rem; line-height: 1.45; -webkit-line-clamp: 2; }
+  .packages .tour-card-body > strong { margin-top: 3px; font-size: .94rem; }
+  .packages .tour-detail-trigger { min-height: 44px; border-radius: 8px; font-size: .8rem; }
+  .packages .tour-arrows { inset: 50% 5px auto; transform: translateY(-50%); gap: 0; }
+  .packages .tour-arrow { width: 34px; height: 38px; border-radius: 8px; background: #ffffffef; color: #345e50; font-size: 1.15rem; }
+  #contact .contactbox { padding: 18px 16px; border-radius: 14px !important; }
+  .contactbox h2 { font-size: 1.8rem; margin: 8px 0 10px; }
+  .contactbox p { font-size: .86rem; line-height: 1.5; }
+  .form { margin-top: 16px; gap: 8px; }
+  .contact-float { top: auto; bottom: max(10px, env(safe-area-inset-bottom)); right: 10px; transform: none; flex-direction: row; gap: 5px; padding: 5px; border-radius: 30px; background: #ffffffe8; box-shadow: 0 4px 18px #17382d24; }
+  .contact-float .float-btn { width: 36px !important; height: 36px !important; min-width: 36px; min-height: 36px; flex-basis: 36px; }
+  body.tour-modal-open .contact-float, body.blog-modal-open .contact-float { visibility: hidden; }
+  .site-footer { margin-top: 8px; padding-bottom: 76px; }
 }
