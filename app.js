@@ -1,5 +1,6 @@
 const theme = document.createElement('link'); theme.rel = 'stylesheet'; theme.href = 'natural-theme.css'; document.head.appendChild(theme);
 const salesLayout = document.createElement('link'); salesLayout.rel = 'stylesheet'; salesLayout.href = 'natural-sales-layout.css'; document.head.appendChild(salesLayout);
+const mobilePolish = document.createElement('link'); mobilePolish.rel = 'stylesheet'; mobilePolish.href = 'mobile-polish.css'; document.head.appendChild(mobilePolish);
 const nav = document.querySelector('.nav');
 const menu = document.querySelector('#menu');
 const links = document.querySelector('#navigation');
