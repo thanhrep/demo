@@ -44,10 +44,13 @@
     });
     backdrop.addEventListener('click', () => close(grid.querySelector('.is-expanded')));
     document.addEventListener('keydown', event => { if (event.key === 'Escape') close(grid.querySelector('.is-expanded')); });
+    let carouselIndex = 0;
     const moveGrid = direction => {
-      const step = Math.max(220, grid.clientWidth * .82);
-      const target = Math.max(0, Math.min(grid.scrollLeft + direction * step, grid.scrollWidth - grid.clientWidth));
-      grid.scrollTo({ left: target, behavior: 'smooth' });
+      carouselIndex = Math.max(0, Math.min(cards.length - 1, carouselIndex + direction));
+      cards.forEach(item => item.classList.remove('is-active'));
+      cards[carouselIndex].classList.add('is-active');
+      cards[carouselIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      setTimeout(() => cards[carouselIndex]?.classList.remove('is-active'), 650);
     };
     controls.querySelector('.tour-arrow:first-child').addEventListener('click', () => moveGrid(-1));
     controls.querySelector('.tour-arrow:last-child').addEventListener('click', () => moveGrid(1));
