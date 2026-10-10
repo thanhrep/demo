@@ -19,6 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Add cache-busted tour interactions
+        run: python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('</body>', '<script src=\"tour-interactions.js?v=${{ github.sha }}\"></script></body>'); p.write_text(s, encoding='utf-8')"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
