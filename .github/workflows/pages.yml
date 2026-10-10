@@ -19,8 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Add cache-busted tour interactions
-        run: python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('</head>', '<link rel=\"stylesheet\" href=\"tour-carousel.css?v=${{ github.sha }}\"></head>'); s=s.replace('</body>', '<script src=\"tour-interactions.js?v=${{ github.sha }}\"></script></body>'); p.write_text(s, encoding='utf-8')"
+      - name: Add cache-busted tour interactions and Nho Que background
+        run: python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(encoding='utf-8'); s=s.replace('</head>', '<link rel=\"stylesheet\" href=\"tour-carousel.css?v=${{ github.sha }}\"><link rel=\"stylesheet\" href=\"nho-que-background.css?v=${{ github.sha }}\"></head>'); s=s.replace('</body>', '<script src=\"tour-interactions.js?v=${{ github.sha }}\"></script><script src=\"assets/nho-que-background.js?v=${{ github.sha }}\"></script></body>'); p.write_text(s, encoding='utf-8')"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

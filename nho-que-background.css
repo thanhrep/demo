@@ -1,0 +1,7 @@
+/* Place the Nho Que scene between the site's rotating photo backdrop and content. */
+.scene-bg{opacity:.34!important}
+.skyhagiang-bg-wrapper{opacity:.72;mix-blend-mode:normal;transition:opacity .8s ease}
+.skyhagiang-bg-wrapper canvas{pointer-events:none}
+@media(max-width:800px){.scene-bg{opacity:.28!important}.skyhagiang-bg-wrapper{opacity:.64}}
+@media(prefers-reduced-motion:reduce){.skyhagiang-bg-wrapper{opacity:.4}}
+
