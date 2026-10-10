@@ -120,7 +120,7 @@ svg {
   }
 
   /* Journey cards become a swipeable rail, not three unreadable columns. */
-  .tours .grid {
+  #tours .grid {
     display: flex;
     gap: 14px;
     margin-inline: -2px;
@@ -132,12 +132,12 @@ svg {
     touch-action: pan-x;
   }
 
-  .tours .grid::-webkit-scrollbar,
+  #tours .grid::-webkit-scrollbar,
   .package-grid::-webkit-scrollbar {
     display: none;
   }
 
-  .tours .card {
+  #tours .card {
     flex: 0 0 min(84vw, 360px);
     min-width: 0;
     scroll-snap-align: center;
@@ -145,29 +145,29 @@ svg {
     border-radius: 20px;
   }
 
-  .tours .card img {
+  #tours .card img {
     height: clamp(160px, 52vw, 210px);
   }
 
-  .tours .cardbody {
+  #tours .cardbody {
     padding: 18px;
   }
 
-  .tours .card h3 {
+  #tours .card h3 {
     min-height: 0;
     margin: 13px 0 8px;
     font-size: clamp(1.25rem, 5.8vw, 1.65rem);
     line-height: 1.08;
   }
 
-  .tours .card p {
+  #tours .card p {
     min-height: 0;
     margin-bottom: 14px;
     font-size: 0.9rem;
     line-height: 1.5;
   }
 
-  .tours .price {
+  #tours .price {
     font-size: 0.86rem;
   }
 
@@ -421,7 +421,7 @@ svg {
     font-size: clamp(2.4rem, 11.5vw, 3.25rem);
   }
 
-  .tours .card {
+  #tours .card {
     flex-basis: 86vw;
   }
 
